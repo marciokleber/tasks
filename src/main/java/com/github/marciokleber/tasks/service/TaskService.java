@@ -1,15 +1,25 @@
 package com.github.marciokleber.tasks.service;
 
 import com.github.marciokleber.tasks.domain.Task;
+import com.github.marciokleber.tasks.repository.TaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
 
+    @Autowired
+    TaskRepository taskRepository;
+
     /**
      * Create a new task
      */
-    public void createNewTask() {}
+    public Task createNewTask(Task task) {
+        return taskRepository.save(task);
+    }
 
     /**
      * Update task
@@ -19,15 +29,23 @@ public class TaskService {
     /**
      * Delete task
      */
-    public void deleteTask() {}
+    public void deleteTaskById(Long id) {
+        taskRepository.findById(id).ifPresentOrElse(taskRepository::delete, () -> {});
+    }
 
     /**
      * Find task by attribute id
      */
-    public void findTaskById() {}
+    public Task findTaskById(Long id) {
+        return taskRepository.findById(id)
+                .isPresent() ?
+                taskRepository.findById(id).get() : null;
+    }
 
     /**
      * Find all tasks
      */
-    void findAllTasks() {}
+    public List<Task> findAllTasks() {
+        return taskRepository.findAll();
+    }
 }
