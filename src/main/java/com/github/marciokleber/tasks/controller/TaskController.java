@@ -6,12 +6,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller("/api/task")
+@RestController
+@RequestMapping("/api/task")
 public class TaskController {
 
     @Autowired
@@ -24,10 +24,7 @@ public class TaskController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> findById(@PathVariable Long id) {
-        var task = taskService.findTaskById(id);
-        return (task == null) ?
-                ResponseEntity.status(HttpStatus.NOT_FOUND).build() :
-                ResponseEntity.ok(task);
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.findTaskById(id));
     }
 
     @DeleteMapping("/{id}")
@@ -36,9 +33,14 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<Task> create(@RequestBody @Valid Task task) {
         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createNewTask(task));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> update(@PathVariable Long id, @RequestBody @Valid Task task) {
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.updateTask(id, task));
     }
 
 }
