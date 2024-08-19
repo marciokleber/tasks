@@ -6,6 +6,8 @@ server:
 spring:
     application:
         name: tasks
+    flyway:
+        enabled: false
     datasource:
         url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/tasks}
         username: ${SPRING_DATASOURCE_USERNAME:user}
