@@ -30,7 +30,6 @@ import {TagModule} from "primeng/tag";
     RatingModule,
     FormsModule,
     TagModule,
-
   ]
 })
 export class HomeModule { }

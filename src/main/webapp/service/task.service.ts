@@ -1,42 +1,17 @@
 import { Injectable } from '@angular/core';
-import {Task} from "../app/interface/task";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-  products: Task[] = [
-    {
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-    },
-    {
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-    }
+  private API_URL = 'http:localhost:8080/tasks'
+  constructor(private http: HttpClient) { }
 
-  ];
-
-  constructor() { }
-
-  getProducts(): Task[] {
-    return this.products;
+  // Método para realizar uma requisição GET
+  findAll(): Observable<any> {
+    return this.http.get<any>(`http://localhost:8080/tasks/api/task`);
   }
 }

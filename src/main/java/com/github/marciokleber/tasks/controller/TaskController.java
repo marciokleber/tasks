@@ -17,6 +17,7 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping
     public ResponseEntity<List<Task>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(taskService.findAllTasks());

@@ -16,11 +16,13 @@ export class HomeComponent implements OnInit{
 
   items: MenuItem[] = [];
   products: Task[] = []
+  tasks: Task[] = []
   sidebarVisible: boolean = false;
 
   ngOnInit() {
+    this.taskService.findAll().subscribe(data => {this.tasks = data
+    console.log(data)}, error => console.error('Erro ao carregar dados:', error))
 
-    this.products = this.taskService.getProducts();
 
     this.items = [
       {
@@ -147,19 +149,4 @@ export class HomeComponent implements OnInit{
     ];
   }
 
-  getSeverity (product : Task) {
-    switch (product.inventoryStatus) {
-      case 'INSTOCK':
-        return 'success';
-
-      case 'LOWSTOCK':
-        return 'warning';
-
-      case 'OUTOFSTOCK':
-        return 'danger';
-
-      default:
-        return null;
-    }
-  };
 }
